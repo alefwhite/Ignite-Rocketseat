@@ -1,0 +1,155 @@
+1 - Iniciamos com a criação do package.json 
+    -> npm init -y ou yarn init -y
+
+2 - Adicicionamos a biblioteca do React no projeto
+    -> yarn add react ou npm i react
+
+3 - Adicicionamos a biblioteca React Dom no projeto
+    -> yarn add react-dom
+
+4 - Criação da estrutura de pasta do projeto
+    Raiz 
+        -> public > index.html
+        -> src > index.jsx
+
+5 - Instalação e configuração do babel que é uma biblioteca que consegue converter nosso código para que todos os navegadores 
+entendam o nosso código.
+    -> yarn add @babel/core @babel/cli @babel/preset-env -D
+
+    Após a Instalação devemos criar um arquivo na raiz chamado babel.config.js
+
+    Incluindo o primeiro preset no arquivo de configuração
+        ->  module.exports = {
+                presets: ['@babel/preset-env']
+            }
+
+    Para mostrar os comandos disponiveis no babel podemos usar -> yarn babel -h
+
+6 - Na raiz devemos criar um arquivo index.js
+
+
+7 - Para converter algum arquivo do nosso projeto podemos fazer da seguinte forma
+    -> yarn babel caminho_do_arquivo --out-file caminho_de_destino = pasta/nome_do_arquivo
+        Ex: yarn babel src/index --out-file dist/bundle.js
+
+8 - Instalação do preset do bale para que ele reconheça códigos do react
+    -> yarn add @babel/preset-react -D
+
+    Agora devemos incluir esse preset @babel/preset-react no babel.config
+        module.exports = {
+            presets: [
+                '@babel/preset-env',
+                '@babel/preset-react',
+            ]
+        }
+
+9 - Podemos mudar a extensão do arquivo index.js para jsx 
+
+
+10 - Configuração e Instalação do WEBPACK para podermos trabalhar com qualquer tipo de arquivo na nossa aplicação
+    -> yarn add webpack webpack-cli -D
+
+    Após a instalação devemos criar um arquivo na raiz chamado webpack.config.js
+
+    Configuração do webpack
+    const path = require('path')
+
+    module.exports = {
+        entry: path.resolve(__dirname, 'src', 'index.jsx'),
+        output: {
+            path: path.resolve(__dirname, 'src'),
+            filename: 'bundle.js'
+        },
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.jsx$/,
+                    exclude: /node_modules/,
+                    use: 'babel-loader'
+                }
+            ]
+        }
+    }
+
+    -> Precisaremos também instalar o babel loader para utilizar junto com o webpack
+        -> yarn add babel-loader -D
+
+
+11 - Agora para testarmos o webpack junto com o babel
+    -> Podemos criar uma arquivo App.jsx dentro da pasta src e colocar um simples código de retorno de um h1
+    -> Depois rodar yarn babel src/index.jsx --out-file dist/bundle.js que criará uma pasta dist
+    -> Depois yarn webpack
+
+
+12 - Configurando a estrutura do React
+    -> Dentro da pasta public temos um arquivo chamado index.html que devemos incluir o seguinte código dentro do body
+        -> <div id="root"></div>
+        -> <script src="../dist/bundle.js"></script>
+
+    -> Dentro do nosso arquivo index.jsx podemos incluir o seguinte código para testarmos o react e depois rodar yarn webpack  
+        import React from "react";
+
+        import { render } from "react-dom";
+
+        import { App } from './App';
+
+        render(<h1>Teste</h1>, document.getElementById('root'))
+
+
+    ->  No arquivo babel.config podemos setar uma configuração do preset do react que irá incluir automaticamente o import do React
+        caso esquecermos de importar em nossos arquivos
+            module.exports = {
+                    presets: [
+                        '@babel/preset-env',
+                        [
+                            '@babel/preset-react', 
+                            {
+                                runtime: 'automatic'
+                            }        
+                        ],
+                    ]
+            }   
+
+        Para testarmos podemos remover o import do React no arquivo index.jsx e rodar yarn webpack novamente
+
+
+13 - Para tratarmos uma warning do webpack que pede para que seja identificado se estamos em desenvolvimento ou produção
+     então podemos incluir a seguinte propriedade no webpack.config
+        mode: 'development',
+
+
+14 - Intalaremos um plugin do webpack que injeta automaticamente o <script src="../dist/bundle.js"></script> no index.html 
+     independente do nome do arquivo js então podemos retirar o script do html
+
+    -> yarn add html-webpack-plugin -D
+
+    Agora no webpack.config
+        -> Importar o plugin const HtmlWebpackPlugin = require('html-webpack-plugin')
+        -> Incluir nas propriedades do webpack 
+            plugins: [
+                new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html')})
+            ],    
+        -> Devemos rodar novamente yarn webpack que deverá criar um arquivo index.html na pasta dist
+        
+
+15 - Configuração do WEBPACK DEV SERVER para que sempre que houver uma atualização em algum arquivo ele criar automaticamente o bundle
+     sem precisar ficar rodando toda hora yarn webpack
+    => yarn add webpack-dev-server -D
+
+        Agora no webpack.config setar a seguinte configuração
+            devServer: {
+                static: path.resolve(__dirname, 'public')
+            },
+
+        Para rodar yarn webpack serve
+
+16 - Utilizando source maps, caso ocorra um erro em um dos nossos arquivos o source map irá mostrar o código igual ao o arquivo
+     do projeto sem os código que são gerados do react
+
+    -> Agora em nosso webpack.config em baixo de mode devemos incluir seguinte propriedade devtool: 'eval-source-map',
+
+
+17 - Configurando Ambiente de desenvolvimento e produção
