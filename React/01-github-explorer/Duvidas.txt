@@ -192,4 +192,23 @@ entendam o nosso código.
         ]
     }
 
-    
+19 - Utilizando SASS
+    -> Instalação
+        yarn add node-sass -D
+        yarn add sass-loader -D
+
+     module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            // Aqui devemos apenas incluir o sass-loader e mudar o .css para .scss
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            }
+        ]
+    }
