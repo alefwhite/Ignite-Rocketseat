@@ -153,3 +153,43 @@ entendam o nosso código.
 
 
 17 - Configurando Ambiente de desenvolvimento e produção
+    ->  Devemos criar uma variavel e checar uma propriedade definada por nós para identificar qual Ambiente estamos
+    
+    const isDevelopment = process.env.NODE_ENV !== 'production'
+
+    Em Mode E Devtool devemos incluir a seguinte checagem
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    
+
+    Agora devemos instalar um biblioteca para lidar com variaveis de Ambiente
+    yarn add cross-env -D
+
+    Agora no package.json devemos incluir uma objeto chamado scripts com as configurações abaixo
+    "scripts": {
+        "dev": "webpack serve",
+        "build": "cross-env NODE_ENV=production webpack"
+    }
+
+
+18 - Configuração para importar arquivos css precisaremos criar uma nova regra no webpack para ele fazer a leitura de arquivos css
+    -> Inslação dos loaders yarn add style-loader css-loader -D
+
+    Na propriedade module do webpack devemos incluir a rule de css
+    module: {
+        rules: [
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
+            },
+            // rule do css
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: ['style-loader', 'css-loader']
+            }
+        ]
+    }
+
+    
