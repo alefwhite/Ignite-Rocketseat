@@ -7,7 +7,7 @@ export function RespositoryItem (props) {
 
             <p>{props.repository.description}</p>
 
-            <a href={props.repository.link}>Acessa repositório</a>
+            <a href={props.repository.html_url}>Acessa repositório</a>
         </li>                
    
     )

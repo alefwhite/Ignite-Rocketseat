@@ -242,3 +242,6 @@ entendam o código jsx.
                     }
                 }
             },
+
+    
+    21 - Usando o typescript no projeto
