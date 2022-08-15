@@ -13,7 +13,7 @@
         -> src > index.jsx
 
 5 - Instalação e configuração do babel que é uma biblioteca que consegue converter nosso código para que todos os navegadores 
-entendam o nosso código.
+entendam o código jsx.
     -> yarn add @babel/core @babel/cli @babel/preset-env -D
 
     Após a Instalação devemos criar um arquivo na raiz chamado babel.config.js
@@ -32,7 +32,7 @@ entendam o nosso código.
     -> yarn babel caminho_do_arquivo --out-file caminho_de_destino = pasta/nome_do_arquivo
         Ex: yarn babel src/index --out-file dist/bundle.js
 
-8 - Instalação do preset do bale para que ele reconheça códigos do react
+8 - Instalação do preset do babel para que ele reconheça códigos do react
     -> yarn add @babel/preset-react -D
 
     Agora devemos incluir esse preset @babel/preset-react no babel.config
@@ -212,3 +212,33 @@ entendam o nosso código.
             }
         ]
     }
+
+20 - Fast Refresh é um plugin que caso alterarmos alguma coisa em nosso código os estados do component não serão zerados
+     pois se tivermos testando um fluxo e alterarmos algo no código sem o fast refresh ele irá resetar todos os estados da aplicação
+
+     ->  yarn add -D @pmmmwh/react-refresh-webpack-plugin react-refresh
+     ->  Agora devemos ir até o webpack config e setar a configuração abaixo
+
+        const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin') -> Import do plugin
+
+        devServer: {
+            hot: true -> Incluir esse código         
+        },
+        
+        plugins: [
+            isDevelopment && new ReactRefreshWebpackPlugin() -> Incluir esse código          
+        ].filter(Boolean),
+
+        em rules mudar use para objeto e setar as config abaixo
+             {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: [
+                            isDevelopment && require.resolve('react-refresh/babel')
+                        ].filter(Boolean)
+                    }
+                }
+            },
