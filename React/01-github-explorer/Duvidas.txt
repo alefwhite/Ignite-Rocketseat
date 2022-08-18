@@ -322,3 +322,7 @@ entendam o código jsx.
         Agora precisaremos instalar alguns types 
             yarn add @types/react-dom -D
             yarn add @types/react -D - Talvez n precise
+
+
+
+    22 - Instalação da extensão React Dev Tools no chrome
