@@ -245,3 +245,80 @@ entendam o código jsx.
 
     
     21 - Usando o typescript no projeto
+
+         Instalação yarn add typescript -D
+
+         Após a instalação devemos executar o seguinte comando yarn tsc --init para criar o arquivo de configuração do typescript
+         tsconfig.json
+
+         Depois setarmos as seguintes configurações
+         {
+            "compilerOptions": {   
+                "lib": ["dom", "dom.iterable", "esnext"], 
+                "allowJs": true,
+                "jsx": "react-jsx",
+                "noEmit": true,
+                "strict": true,                                       /* Enable all strict type-checking options. */   
+                "moduleResolution": "node",
+                "resolveJsonModule": true,
+                "isolatedModules": true,
+                "allowSyntheticDefaultImports": true,
+                "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+                "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+                "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+            },
+             "include": ["src"],
+              "exclude": ["node_modules", "**/*.spec.ts"]
+        }
+
+        Agora precisaremos incluir um plugin do babel para que ele reconheça códigos JavaScript
+            yarn add @babel/preset-typescript -D
+
+        Em nosso babel.config.js devemos setar o preset do typescript @babel/preset-typescript
+
+        module.exports = {
+            presets: [
+                '@babel/preset-env',
+                '@babel/preset-typescript',
+                [
+                    '@babel/preset-react', 
+                    {
+                        runtime: 'automatic'
+                    }        
+                ],
+            ]
+        }
+
+        Agora no webpack.config.js devemos incluir 
+        Dentro da propriedade module, resolve e entry do webpack
+        entry: path.resolve(__dirname, 'src', 'index.tsx') -> Foi modificado para index.tsx
+
+         resolve: {
+            extensions: ['.js', '.jsx', 'ts','.tsx'] -> Foi acrescentado ts e tsx
+         },
+
+         module: {
+            rules: [
+                {
+                    test: /\.(j|t)sx$/ -> Foi acrescentado (j|t)
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            plugins: [
+                                isDevelopment && require.resolve('react-refresh/babel')
+                            ].filter(Boolean)
+                        }
+                    }
+                },
+                {
+                    test: /\.scss$/,
+                    exclude: /node_modules/,
+                    use: ['style-loader', 'css-loader', 'sass-loader']
+                }
+            ]
+        }
+
+        Agora precisaremos instalar alguns types 
+            yarn add @types/react-dom -D
+            yarn add @types/react -D - Talvez n precise
