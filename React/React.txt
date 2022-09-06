@@ -1,3 +1,10 @@
+React
+
 yarn create react-app --template typescript
 
 yarn create vite nome_da_pasta_do_projeto --template react-ts
+
+===========================================================================================
+Next
+
+yarn create next-app nome_da_pasta_do_projeto 

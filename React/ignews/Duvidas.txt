@@ -1,0 +1,8 @@
+1 - Adicionando Typescript no projeto
+    yarn add typescript @types/react @types/node -D
+
+2 - Por padrão o next criou os arquivos app e index como js, agora após a instalação do typescript podemos renomea-los para tsx e 
+    reniciarmos a aplicação e assim ele vai configurar automaticamente o projeto com typescript gerando os arquivos necessarios.
+
+    Agora em nos tsconfig devemos incluir a seguinte configurar
+     "moduleResolution": "node"
