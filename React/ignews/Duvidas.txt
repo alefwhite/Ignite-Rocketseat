@@ -6,3 +6,13 @@
 
     Agora em nos tsconfig devemos incluir a seguinte configurar
      "moduleResolution": "node"
+
+
+3 - Estilização com SASS
+    yarn add sass
+
+    Agora com a instalação do sass podemos criar nossos arquivos de estilo scoped onde ele apenas aplicara os esitlos no arquivo que
+    importarmos.
+
+    Então dentro da pasta styles podemos criar um arquivo para testar o sass chamado home.module.scss - Esse module é que faz o arquivo
+    css ou scss ficar scoped

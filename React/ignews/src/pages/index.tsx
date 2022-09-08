@@ -1,5 +1,13 @@
+
+import Head from 'next/head';
+
 export default function Home() {
   return (
-    <h1>Teste</h1>
+    <>
+      <Head><title>Ig News</title></Head>
+      <h1>
+        Teste
+      </h1>
+    </>
   )
 }
