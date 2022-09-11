@@ -16,3 +16,6 @@
 
     Então dentro da pasta styles podemos criar um arquivo para testar o sass chamado home.module.scss - Esse module é que faz o arquivo
     css ou scss ficar scoped
+
+
+4 - instalação do react icons - yarn add react-icons
