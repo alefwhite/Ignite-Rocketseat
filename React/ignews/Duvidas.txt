@@ -19,3 +19,5 @@
 
 
 4 - instalação do react icons - yarn add react-icons
+
+5 - yarn add stripe - Sdk da api de pagamentos do stripe
