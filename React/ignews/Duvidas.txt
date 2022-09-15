@@ -4,7 +4,7 @@
 2 - Por padrão o next criou os arquivos app e index como js, agora após a instalação do typescript podemos renomea-los para tsx e 
     reniciarmos a aplicação e assim ele vai configurar automaticamente o projeto com typescript gerando os arquivos necessarios.
 
-    Agora em nos tsconfig devemos incluir a seguinte configurar
+    Agora em nos tsconfig devemos incluir a seguinte configuração
      "moduleResolution": "node"
 
 
@@ -21,3 +21,8 @@
 4 - instalação do react icons - yarn add react-icons
 
 5 - yarn add stripe - Sdk da api de pagamentos do stripe
+
+6 - Utilização do NEXT AUTH
+
+    yarn add next-auth
+    yarn add @types/next-auth -D
