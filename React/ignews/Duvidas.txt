@@ -26,3 +26,7 @@
 
     yarn add next-auth
     yarn add @types/next-auth -D
+
+
+7 - Após criarmos a conta no fauna e configurarmos nosso banco de dados podemos instalar o sdk do fauna
+    yarn add faunadb
