@@ -30,3 +30,8 @@
 
 7 - Após criarmos a conta no fauna e configurarmos nosso banco de dados podemos instalar o sdk do fauna
     yarn add faunadb
+
+
+8 - Instalando o axios yarn add axios
+
+9 - yarn add @stripe/stripe-js - Sdk do stripe para usar no front end
