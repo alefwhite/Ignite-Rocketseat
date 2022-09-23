@@ -35,3 +35,6 @@
 8 - Instalando o axios yarn add axios
 
 9 - yarn add @stripe/stripe-js - Sdk do stripe para usar no front end
+
+10 - stripe-cli
+        choco install stripe-cli
