@@ -2,7 +2,7 @@ import { fauna } from "../../../services/fauna";
 import { query as q } from 'faunadb';
 import { stripe } from "../../../services/stripe";
 
-export async function saveSubscription(subscriptionId: string, customerId: string) {
+export async function saveSubscription(subscriptionId: string, customerId: string, createdAction = false) {
     // Buscar o usuário no banco do FaunaDB com o ID {customerId}
     // Antes precisamos criar um index no fauna user_by_stripe_customer_id -> data.stripe_customer_id
     // Salvar os dados da subscription do usuário no FaunaDB, devemos criar uma collection subscription
@@ -28,11 +28,30 @@ export async function saveSubscription(subscriptionId: string, customerId: strin
         price_id: subscription.items.data[0].price.id
     }
 
-    await fauna.query(
-        q.Create(
-            q.Collection('subscription'),
-            { data: subscriptionData}
+    if (createdAction) {
+        await fauna.query(
+            q.Create(
+                q.Collection('subscription'),
+                { data: subscriptionData}
+            )
         )
-    )
+    } else {
+        // Criar um novo index na collection subscription
+        // subscription_by_id -> data.id
+        await fauna.query(
+            q.Replace(
+                q.Select(
+                    "ref",
+                    q.Get(
+                        q.Match(
+                            q.Index('subscription_by_id'),
+                            subscription.id
+                        )
+                    )
+                ),
+                { data: subscriptionData}
+            )
+        )
+    }
 
 }
